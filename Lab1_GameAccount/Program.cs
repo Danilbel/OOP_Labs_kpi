@@ -12,7 +12,7 @@ namespace Lab1_GameAccount
             GameAccount tom = new GameAccount("Tom", startRating);
             GameAccount rob = new GameAccount("Rob", startRating);
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 8; i++)
             {
                 var game = random.Next(0, 3);
                 if (game == 0)

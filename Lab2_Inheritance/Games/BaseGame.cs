@@ -15,7 +15,7 @@ namespace Lab2_Inheritance.Games
         protected static readonly Random Random = new Random();
         private static int _gameIndexSeed = 2345;
         public int IdGame { get; }
-        public int RatingGame { get; set; }
+        public int RatingGame { get; }
         public BaseGameAccount Winner { get; set; }
         public BaseGameAccount Loser { get; set; }
         public int RatingOperationWinner { get; set; }

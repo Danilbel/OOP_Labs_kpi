@@ -12,6 +12,28 @@ namespace Lab2_Inheritance.Accounts
                 double coefficient = 1;
                 for (int i = AccountGameHistory.Count - 1; i >= 0; i--)
                 {
+                    if (AccountGameHistory.ElementAt(i).TypeGame == BaseGame.TypesGame.Training)
+                    {
+                        continue;
+                    }
+                    if (AccountGameHistory.ElementAt(i).TypeGame == BaseGame.TypesGame.NonRatingForOne)
+                    {
+                        if (AccountGameHistory.ElementAt(i).RatingOperationWinner == 0)
+                        {
+                            if (AccountGameHistory.ElementAt(i).Winner.Equals(this))
+                            {
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            if (AccountGameHistory.ElementAt(i).Loser.Equals(this))
+                            {
+                                continue;
+                            }
+                        }
+                    }
+                    
                     if (AccountGameHistory.ElementAt(i).Winner.Equals(this))
                     {
                         coefficient += 0.1;

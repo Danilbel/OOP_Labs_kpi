@@ -13,7 +13,7 @@ namespace Lab2_Inheritance.Accounts
             SeriesWin
         }
         protected readonly List<BaseGame> AccountGameHistory = new List<BaseGame>();
-        public string UserName { get; set; }
+        public string UserName { get; }
         protected int StartRating { get; }
         public int CurrentRating
         {

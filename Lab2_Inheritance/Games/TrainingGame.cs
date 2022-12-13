@@ -7,7 +7,7 @@ namespace Lab2_Inheritance.Games
         public TrainingGame(BaseGameAccount firstPlayer, BaseGameAccount secondPlayer) 
             : base(0)
         {
-            TypeGame = TypesGame.Training;
+            TypeGame_ = TypeGame.Training;
             PlayGame(firstPlayer, secondPlayer);
         }
 
@@ -29,6 +29,11 @@ namespace Lab2_Inheritance.Games
             
             Winner.WinGame(this);
             Loser.LoseGame(this);
+        }
+
+        public override bool IsRatingForPlayer(BaseGameAccount gameAccount)
+        {
+            return false;
         }
     }
 }

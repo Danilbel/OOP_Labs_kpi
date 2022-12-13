@@ -7,7 +7,7 @@ namespace Lab2_Inheritance.Games
         public StandardGame(BaseGameAccount firstPlayer, BaseGameAccount secondPlayer, int rating)
              : base(rating)
         {
-            TypeGame = TypesGame.Standard;
+            TypeGame_ = TypeGame.Standard;
             PlayGame(firstPlayer, secondPlayer);
         }
 
@@ -30,6 +30,10 @@ namespace Lab2_Inheritance.Games
             Winner.WinGame(this);
             Loser.LoseGame(this);
         }
-        
+
+        public override bool IsRatingForPlayer(BaseGameAccount gameAccount)
+        {
+            return true;
+        }
     }
 }

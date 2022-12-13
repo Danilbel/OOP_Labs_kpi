@@ -5,7 +5,7 @@ namespace Lab2_Inheritance.Games
 {
     public abstract class BaseGame
     {
-        public enum TypesGame
+        public enum TypeGame
         {
             Standard,
             NonRatingForOne,
@@ -16,11 +16,11 @@ namespace Lab2_Inheritance.Games
         private static int _gameIndexSeed = 2345;
         public int IdGame { get; }
         public int RatingGame { get; }
-        public BaseGameAccount Winner { get; set; }
-        public BaseGameAccount Loser { get; set; }
+        public BaseGameAccount Winner { get; protected set; }
+        public BaseGameAccount Loser { get; protected set; }
         public int RatingOperationWinner { get; set; }
         public int RatingOperationLoser { get; set; }
-        public TypesGame TypeGame { get; set; }
+        public TypeGame TypeGame_ { get; protected set; }
         
         protected BaseGame(int ratingGame)
         {
@@ -38,6 +38,6 @@ namespace Lab2_Inheritance.Games
         }
 
         protected abstract void PlayGame(BaseGameAccount firstPlayer, BaseGameAccount secondPlayer);
-        
+        public abstract bool IsRatingForPlayer(BaseGameAccount gameAccount);
     }
 }

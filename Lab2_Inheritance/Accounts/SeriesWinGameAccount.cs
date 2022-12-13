@@ -10,40 +10,15 @@ namespace Lab2_Inheritance.Accounts
             get
             {
                 double coefficient = 1;
-                for (int i = AccountGameHistory.Count - 1; i >= 0; i--)
+                AccountGameHistory.Reverse();
+                foreach (var item in AccountGameHistory)
                 {
-                    if (AccountGameHistory.ElementAt(i).TypeGame == BaseGame.TypesGame.Training)
-                    {
-                        continue;
-                    }
-                    if (AccountGameHistory.ElementAt(i).TypeGame == BaseGame.TypesGame.NonRatingForOne)
-                    {
-                        if (AccountGameHistory.ElementAt(i).RatingOperationWinner == 0)
-                        {
-                            if (AccountGameHistory.ElementAt(i).Winner.Equals(this))
-                            {
-                                continue;
-                            }
-                        }
-                        else
-                        {
-                            if (AccountGameHistory.ElementAt(i).Loser.Equals(this))
-                            {
-                                continue;
-                            }
-                        }
-                    }
+                    if (!item.IsRatingForPlayer(this)) continue;
+                    if (item.Winner != this) break;
                     
-                    if (AccountGameHistory.ElementAt(i).Winner.Equals(this))
-                    {
-                        coefficient += 0.1;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    coefficient += 0.1;
                 }
-
+                AccountGameHistory.Reverse();
                 return coefficient;
             }
         }

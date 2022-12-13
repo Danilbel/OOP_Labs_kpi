@@ -22,7 +22,9 @@ namespace Lab2_Inheritance.Accounts
                 int rating = StartRating;
                 foreach (var item in AccountGameHistory)
                 {
-                    rating += item.Winner.Equals(this) 
+                    if (!item.IsRatingForPlayer(this)) continue;
+                    
+                    rating += item.Winner.Equals(this)
                         ? item.RatingOperationWinner 
                         : item.RatingOperationLoser;
                 }
@@ -74,7 +76,7 @@ namespace Lab2_Inheritance.Accounts
                     ratingOperation = "" + item.RatingOperationLoser;
                 }
                 str.Append(
-                    $"{item.IdGame}\t{item.TypeGame}\t {opponentName}\t\t{item.RatingGame}\t\t{resultGame}\t\t{ratingOperation}\n");
+                    $"{item.IdGame}\t{item.TypeGame_}\t {opponentName}\t\t{item.RatingGame}\t\t{resultGame}\t\t{ratingOperation}\n");
             }
 
             return str.ToString();

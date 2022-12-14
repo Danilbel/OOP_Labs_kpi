@@ -19,21 +19,27 @@ namespace Lab2_Inheritance
                 getGameAccount.GetSeriesWinGameAccount("Liza", 100)
             };
             
-            // StandardGame
-            getGame.GetStandardGame(accounts[0], accounts[1], 40);
-            getGame.GetStandardGame(accounts[1], accounts[2], 30);
-            getGame.GetStandardGame(accounts[2], accounts[0], 50);
-            
-            // NonRatingForOneGame
-            getGame.GetNonRatingForOneGame(accounts[0], accounts[1], 40);
-            getGame.GetNonRatingForOneGame(accounts[1], accounts[2], 30);
-            getGame.GetNonRatingForOneGame(accounts[2], accounts[0], 50);
-
             // TrainingGame
             getGame.GetTrainingGame(accounts[0], accounts[1]);
             getGame.GetTrainingGame(accounts[1], accounts[2]);
             getGame.GetTrainingGame(accounts[2], accounts[0]);
             
+            // StandardGame
+            for (int i = 0; i < 2; i++)
+            {
+                getGame.GetStandardGame(accounts[0], accounts[1], 40);
+                getGame.GetStandardGame(accounts[1], accounts[2], 30);
+                getGame.GetStandardGame(accounts[2], accounts[0], 50);
+            }
+            
+            // NonRatingForOneGame
+            for (int i = 0; i < 2; i++)
+            {
+                getGame.GetNonRatingForOneGame(accounts[0], accounts[1], 40);
+                getGame.GetNonRatingForOneGame(accounts[1], accounts[2], 30);
+                getGame.GetNonRatingForOneGame(accounts[2], accounts[0], 50);
+            }
+
             Console.WriteLine(accounts[0].GetStats() + "\n" + accounts[1].GetStats() + "\n" + accounts[2].GetStats());
         }
     }

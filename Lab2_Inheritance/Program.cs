@@ -14,7 +14,7 @@ namespace Lab2_Inheritance
 
             var accounts = new List<BaseGameAccount>
             {
-                getGameAccount.GetStandardGameAccount("Danya", 100),
+                getGameAccount.GetBaseGameAccount("Danya", 100),
                 getGameAccount.GetHalfSaveGameAccount("Vlad", 100),
                 getGameAccount.GetSeriesWinGameAccount("Liza", 100)
             };

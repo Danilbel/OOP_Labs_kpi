@@ -4,81 +4,79 @@ using Lab2_Inheritance.Games;
 
 namespace Lab2_Inheritance.Accounts
 {
-    public abstract class BaseGameAccount
+    public class BaseGameAccount
     {
+        public string UserName { get; }
+        private int StartRating { get; }
         public enum TypesAccount
         {
-            Standard,
+            Base,
             HalfSave,
             SeriesWin
         }
-        protected readonly List<BaseGame> AccountGameHistory = new List<BaseGame>();
-        public string UserName { get; }
-        protected int StartRating { get; }
-        public int CurrentRating
+        private TypesAccount TypeAccount { get; }
+        protected readonly List<AccountGameHistory> AccountGameHistory = new List<AccountGameHistory>();
+        private int GamesCount => AccountGameHistory.Count;
+        protected int CurrentRating
         {
             get
             {
                 int rating = StartRating;
                 foreach (var item in AccountGameHistory)
                 {
-                    if (!item.IsRatingForPlayer(this)) continue;
+                    if (!item.IsGameRating) continue;
                     
-                    rating += item.Winner.Equals(this)
-                        ? item.RatingOperationWinner 
-                        : item.RatingOperationLoser;
+                    rating += item.RatingOperation;
                 }
 
                 return rating;
             }
         }
-        public TypesAccount TypeAccount { get; set; }
-        public int GamesCount => AccountGameHistory.Count;
-        
-        public BaseGameAccount(string name, int startRating)
+
+        public BaseGameAccount(string name, int startRating, TypesAccount typeAccount = TypesAccount.Base)
         {
             UserName = name;
             StartRating = startRating;
+            TypeAccount = typeAccount;
         }
 
-        public abstract void WinGame(BaseGame game);
-
-        public abstract void LoseGame(BaseGame game);
-        
-        protected int CheckRatingOperation(int rating)
+        public virtual void WinGame(BaseGame game)
         {
-            return CurrentRating + rating < 1
-                ? 1 - CurrentRating
-                : rating;
+            AccountGameHistory.Add(new AccountGameHistory(
+                game.Id,
+                game.Type,
+                CurrentRating,
+                Accounts.AccountGameHistory.ResultGame.Win,
+                game.Loser,
+                game.IsRatingForPlayer(this),
+                game.Rating,
+                game.Rating
+            ));
         }
-        
+
+        public virtual void LoseGame(BaseGame game)
+        {
+            AccountGameHistory.Add(new AccountGameHistory(
+                game.Id,
+                game.Type,
+                CurrentRating,
+                Accounts.AccountGameHistory.ResultGame.Lose,
+                game.Winner,
+                game.IsRatingForPlayer(this),
+                game.Rating,
+                -game.Rating
+            ));
+        }
+
         public string GetStats()
         {
-            StringBuilder str =
-                new StringBuilder(
+            StringBuilder str = new StringBuilder(
                     $"{UserName}'s stats:\nType Account: {TypeAccount}\nTotal games played: {GamesCount} | Player rating: {CurrentRating}");
             str.Append("\nIdGame\tTypeGame\t OpponentName\tRatingGame\tResultGame\tRatingOperation\n");
             foreach (var item in AccountGameHistory)
             {
-                string opponentName, resultGame, ratingOperation;
-                if (item.Winner.Equals(this))
-                {
-                    opponentName = item.Loser.UserName;
-                    resultGame = "Win";
-                    ratingOperation = item.RatingOperationWinner == 0 
-                        ? "" + item.RatingOperationWinner
-                        : "+" + item.RatingOperationWinner;
-                }
-                else
-                {
-                    opponentName = item.Winner.UserName;
-                    resultGame = "Lose";
-                    ratingOperation = "" + item.RatingOperationLoser;
-                }
-                str.Append(
-                    $"{item.IdGame}\t{item.TypeGame_}\t {opponentName}\t\t{item.RatingGame}\t\t{resultGame}\t\t{ratingOperation}\n");
+                str.Append(item);
             }
-
             return str.ToString();
         }
     }

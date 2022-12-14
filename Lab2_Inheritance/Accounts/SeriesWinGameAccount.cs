@@ -13,32 +13,35 @@ namespace Lab2_Inheritance.Accounts
                 AccountGameHistory.Reverse();
                 foreach (var item in AccountGameHistory)
                 {
-                    if (!item.IsRatingForPlayer(this)) continue;
-                    if (item.Winner != this) break;
-                    
+                    if (!item.IsGameRating) continue;
+                    if (item.Result == Accounts.AccountGameHistory.ResultGame.Lose) break;
+
                     coefficient += 0.1;
                 }
+
                 AccountGameHistory.Reverse();
                 return coefficient;
             }
         }
 
-        public SeriesWinGameAccount(string name, int startRating) 
-            : base(name, startRating)
+        public SeriesWinGameAccount(string name, int startRating)
+            : base(name, startRating, TypesAccount.SeriesWin)
         {
-            TypeAccount = TypesAccount.SeriesWin;
         }
 
         public override void WinGame(BaseGame game)
         {
-            game.RatingOperationWinner = (int)(game.RatingOperationWinner * CoefficientSeriesWin);
-            AccountGameHistory.Add(game);
+            AccountGameHistory.Add(new AccountGameHistory(
+                game.Id,
+                game.Type,
+                CurrentRating,
+                Accounts.AccountGameHistory.ResultGame.Win,
+                game.Loser,
+                game.IsRatingForPlayer(this),
+                game.Rating,
+                (int)(game.Rating * CoefficientSeriesWin)
+            ));
         }
         
-        public override void LoseGame(BaseGame game)
-        {
-            game.RatingOperationLoser = CheckRatingOperation(game.RatingOperationLoser);
-            AccountGameHistory.Add(game);
-        }
     }
 }

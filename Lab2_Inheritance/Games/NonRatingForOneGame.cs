@@ -8,9 +8,8 @@ namespace Lab2_Inheritance.Games
         private bool IsRatingForLoser { get; set; }
         
         public NonRatingForOneGame(BaseGameAccount firstPlayerNonRating, BaseGameAccount secondPlayer, int rating) 
-            : base(rating)
+            : base(rating, TypeGame.NonRatingForOne)
         {
-            TypeGame_ = TypeGame.NonRatingForOne;
             PlayGame(firstPlayerNonRating, secondPlayer);
         }
 
@@ -20,9 +19,7 @@ namespace Lab2_Inheritance.Games
             {
                 Winner = firstPlayerNonRating;
                 Loser = secondPlayer;
-                RatingOperationWinner = 0;
-                RatingOperationLoser = -RatingGame;
-
+                
                 IsRatingForWinner = false;
                 IsRatingForLoser = true;
             }
@@ -30,15 +27,12 @@ namespace Lab2_Inheritance.Games
             {
                 Winner = secondPlayer;
                 Loser = firstPlayerNonRating;
-                RatingOperationWinner = RatingGame;
-                RatingOperationLoser = 0;
-                
+
                 IsRatingForWinner = true;
                 IsRatingForLoser = false;
             }
             
-            Winner.WinGame(this);
-            Loser.LoseGame(this);
+            SetResultGame();
         }
 
         public override bool IsRatingForPlayer(BaseGameAccount gameAccount)

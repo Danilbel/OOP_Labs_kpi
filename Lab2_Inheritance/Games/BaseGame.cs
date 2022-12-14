@@ -14,30 +14,56 @@ namespace Lab2_Inheritance.Games
         
         protected static readonly Random Random = new Random();
         private static int _gameIndexSeed = 2345;
-        public int IdGame { get; }
-        public int RatingGame { get; }
-        public BaseGameAccount Winner { get; protected set; }
-        public BaseGameAccount Loser { get; protected set; }
-        public int RatingOperationWinner { get; set; }
-        public int RatingOperationLoser { get; set; }
-        public TypeGame TypeGame_ { get; protected set; }
+        public int Id { get; }
         
-        protected BaseGame(int ratingGame)
+        private int _rating;
+        public int Rating
         {
-            CheckNegativeRating(ratingGame);
-            RatingGame = ratingGame;
-            IdGame = _gameIndexSeed++;
-        }
-
-        private void CheckNegativeRating(int rating)
-        {
-            if (rating < 0)
+            get => _rating;
+            private set
             {
-                throw new ArgumentOutOfRangeException(nameof(rating), "The rating played must be positive");
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), "The rating played must be positive");
+                }
+
+                _rating = value;
             }
         }
 
-        protected abstract void PlayGame(BaseGameAccount firstPlayer, BaseGameAccount secondPlayer);
+        public BaseGameAccount Winner { get; protected set; }
+        public BaseGameAccount Loser { get; protected set; }
+        public TypeGame Type { get; }
+        
+        protected BaseGame(int rating, TypeGame type)
+        {
+            Rating = rating;
+            Id = _gameIndexSeed++;
+            Type = type;
+        }
+
+        protected virtual void PlayGame(BaseGameAccount firstPlayer, BaseGameAccount secondPlayer)
+        {
+            if (Random.Next(0, 2) == 0)
+            {
+                Winner = firstPlayer;
+                Loser = secondPlayer;
+            }
+            else
+            {
+                Winner = secondPlayer;
+                Loser = firstPlayer;
+            }
+            
+            SetResultGame();            
+        }
+
+        protected void SetResultGame()
+        {
+            Winner.WinGame(this);
+            Loser.LoseGame(this);
+        }
+        
         public abstract bool IsRatingForPlayer(BaseGameAccount gameAccount);
     }
 }

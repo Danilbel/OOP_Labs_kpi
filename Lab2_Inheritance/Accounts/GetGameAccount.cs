@@ -2,9 +2,9 @@
 {
     public class GetGameAccount
     {
-        public BaseGameAccount GetStandardGameAccount(string name, int startRating)
+        public BaseGameAccount GetBaseGameAccount(string name, int startRating)
         {
-            return new StandardGameAccount(name, startRating);
+            return new BaseGameAccount(name, startRating);
         }
         
         public BaseGameAccount GetHalfSaveGameAccount(string name, int startRating)

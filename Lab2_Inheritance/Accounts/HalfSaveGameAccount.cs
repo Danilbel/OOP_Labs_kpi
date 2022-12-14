@@ -5,20 +5,22 @@ namespace Lab2_Inheritance.Accounts
     public class HalfSaveGameAccount : BaseGameAccount
     {
         public HalfSaveGameAccount(string name, int startRating) 
-            : base(name, startRating)
+            : base(name, startRating, TypesAccount.HalfSave)
         {
-            TypeAccount = TypesAccount.HalfSave;
-        }
-
-        public override void WinGame(BaseGame game)
-        {
-            AccountGameHistory.Add(game);
         }
 
         public override void LoseGame(BaseGame game)
         {
-            game.RatingOperationLoser = CheckRatingOperation(game.RatingOperationLoser / 2);
-            AccountGameHistory.Add(game);
+            AccountGameHistory.Add(new AccountGameHistory(
+                game.Id,
+                game.Type,
+                CurrentRating,
+                Accounts.AccountGameHistory.ResultGame.Lose,
+                game.Winner,
+                game.IsRatingForPlayer(this),
+                game.Rating,
+                -game.Rating / 2
+            ));
         }
     }
 }
